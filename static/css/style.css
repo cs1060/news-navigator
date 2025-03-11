@@ -1,0 +1,38 @@
+.card {
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.news-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.bias-indicator {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+
+.bias-low {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.bias-medium {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.bias-high {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+#map {
+    border-radius: 5px;
+}
