@@ -1,0 +1,40 @@
+.interest-tag {
+    display: inline-block;
+    background-color: #e9ecef;
+    padding: 0.3rem 0.6rem;
+    margin: 0.2rem;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.interest-tag .remove-tag {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    color: #dc3545;
+}
+
+.news-card {
+    margin-bottom: 1rem;
+}
+
+.bias-indicator {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+}
+
+.bias-neutral {
+    background-color: #e9ecef;
+}
+
+.bias-positive {
+    background-color: #d4edda;
+}
+
+.bias-negative {
+    background-color: #f8d7da;
+}
+
+#map {
+    border-radius: 0.25rem;
+}
