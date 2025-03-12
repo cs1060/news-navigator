@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="map"></div>
+
+<div class="news-panel p-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Latest News</h5>
+        <div class="btn-group btn-group-sm">
+            <button class="btn btn-outline-secondary active" data-view="list">List</button>
+            <button class="btn btn-outline-secondary" data-view="cluster">Clusters</button>
+        </div>
+    </div>
+    <div id="newsList"></div>
+</div>
+
+<div class="timeline-slider">
+    <input type="range" class="form-range" id="timeSlider" min="0" max="6" step="1">
+    <div class="d-flex justify-content-between text-muted small">
+        <span>7 days ago</span>
+        <span>Now</span>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Initialize Mapbox
+mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v11',
+    center: [0, 20],
+    zoom: 2
+});
+
+// Add navigation controls
+map.addControl(new mapboxgl.NavigationControl());
+
+// Initialize the heatmap layer
+map.on('load', () => {
+    // Add heatmap source
+    map.addSource('news-heat', {
+        type: 'geojson',
+        data: {
+            type: 'FeatureCollection',
+            features: []
+        }
+    });
+
+    // Add heatmap layer
+    map.addLayer({
+        id: 'news-heat',
+        type: 'heatmap',
+        source: 'news-heat',
+        paint: {
+            'heatmap-weight': [
+                'interpolate',
+                ['linear'],
+                ['get', 'intensity'],
+                0, 0,
+                1, 1
+            ],
+            'heatmap-intensity': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                0, 1,
+                9, 3
+            ],
+            'heatmap-color': [
+                'interpolate',
+                ['linear'],
+                ['heatmap-density'],
+                0, 'rgba(33,102,172,0)',
+                0.2, 'rgb(103,169,207)',
+                0.4, 'rgb(209,229,240)',
+                0.6, 'rgb(253,219,199)',
+                0.8, 'rgb(239,138,98)',
+                1, 'rgb(178,24,43)'
+            ],
+            'heatmap-radius': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                0, 2,
+                9, 20
+            ],
+            'heatmap-opacity': 0.7
+        }
+    });
+
+    // Load initial heatmap data
+    loadHeatmapData();
+});
+
+// Function to load heatmap data
+async function loadHeatmapData() {
+    const response = await fetch('/api/news/heatmap');
+    const data = await response.json();
+    
+    const geojson = {
+        type: 'FeatureCollection',
+        features: data.map(point => ({
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: point.location
+            },
+            properties: {
+                intensity: point.intensity
+            }
+        }))
+    };
+
+    map.getSource('news-heat').setData(geojson);
+}
+
+// Function to render news list
+async function loadNewsList() {
+    const response = await fetch('/api/news');
+    const articles = await response.json();
+    
+    const newsListHtml = articles.map(article => `
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h6 class="card-title mb-0">${article.title}</h6>
+                    <div class="bias-indicator bias-${getBiasLevel(article.bias_score)}"></div>
+                </div>
+                <p class="card-text small text-muted mb-2">${article.content.substring(0, 100)}...</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">${article.location.name}</small>
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick="saveArticle(${article.id})">
+                            Save
+                        </button>
+                        <button class="btn btn-sm btn-outline-success" onclick="shareArticle(${article.id})">
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    document.getElementById('newsList').innerHTML = newsListHtml;
+}
+
+// Helper function to determine bias level
+function getBiasLevel(score) {
+    if (score < 0.2) return 'low';
+    if (score < 0.5) return 'medium';
+    return 'high';
+}
+
+// Save article function
+function saveArticle(articleId) {
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+}
+
+// Share article function
+function shareArticle(articleId) {
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    loginModal.show();
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', () => {
+    loadNewsList();
+    
+    // Handle timeline slider changes
+    document.getElementById('timeSlider').addEventListener('input', (e) => {
+        const daysAgo = 6 - e.target.value;
+        // Update news and heatmap based on selected date
+        loadHeatmapData();
+        loadNewsList();
+    });
+});
+</script>
+{% endblock %}
