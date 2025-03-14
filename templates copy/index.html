@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPT-Powered News Summarization</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>News Summarization</h1>
+      <p class="subtitle">AI-powered article summarization using GPT models</p>
+      <div class="api-status">
+        <span id="status-indicator" class="status-indicator"></span>
+        <span id="api-status">Checking API status...</span>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <div class="left-column">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Articles</h2>
+          </div>
+          <div id="article-list" class="article-list">
+            <!-- Article items will be inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Article Content</h2>
+          </div>
+          <div id="article-details">
+            <h3 id="article-title">Select an article</h3>
+            <div class="article-meta">
+              <span id="article-source"></span>
+              <span id="article-date"></span>
+            </div>
+            <p id="article-content" class="article-content"></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">AI Summary</h2>
+            <button id="summarize-button" class="button button-primary">
+              <span class="button-icon">✨</span> Generate Summary
+            </button>
+          </div>
+          <div class="summary-container">
+            <div id="summary-placeholder" class="summary-placeholder">
+              Select an article and click "Generate Summary" to create an AI-powered summary.
+            </div>
+            <div id="summary-content" class="summary-content" style="display: none;"></div>
+            <div id="summary-loading" class="summary-loading">
+              <div class="spinner"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>GPT-Powered News Summarization API - Prototype 1</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
