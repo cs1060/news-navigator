@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "title": "Government Announces New Healthcare Plan",
+        "content": "The government has unveiled a comprehensive healthcare plan that will benefit millions of citizens. This revolutionary approach will ensure that everyone has access to quality healthcare regardless of income level. Experts praise the initiative as a step forward for the nation.",
+        "source": "National News Network",
+        "actual_bias": "left-leaning"
+    },
+    {
+        "id": 2,
+        "title": "Government Healthcare Plan Raises Concerns",
+        "content": "The recently announced government healthcare plan has raised serious concerns among economists and healthcare providers. Critics argue that the plan will increase national debt and reduce the quality of care. Many are questioning the sustainability of such an expensive program.",
+        "source": "Freedom Press",
+        "actual_bias": "right-leaning"
+    },
+    {
+        "id": 3,
+        "title": "New Healthcare Plan: The Facts",
+        "content": "The government's new healthcare plan includes expanded coverage for preventive care and reduced prescription costs. The plan will be funded through a combination of tax adjustments and efficiency improvements in the current system. Both supporters and critics acknowledge the ambitious scope of the proposal.",
+        "source": "Balanced Reporting",
+        "actual_bias": "neutral"
+    },
+    {
+        "id": 4,
+        "title": "Tax Cuts Stimulate Economic Growth",
+        "content": "Recent tax cuts have led to unprecedented economic growth and job creation. Businesses are reporting record profits and increased hiring. The free market approach has proven successful once again in boosting the economy and benefiting hardworking Americans.",
+        "source": "Business Daily",
+        "actual_bias": "right-leaning"
+    },
+    {
+        "id": 5,
+        "title": "Environmental Regulations Save Local River",
+        "content": "New environmental regulations have successfully cleaned up the river that has been polluted for decades. Wildlife is returning and local communities are celebrating the restoration of this natural resource. This proves that strong government oversight is essential for protecting our environment.",
+        "source": "Green Report",
+        "actual_bias": "left-leaning"
+    },
+    {
+        "id": 6,
+        "title": "Stock Market Reaches New Heights",
+        "content": "The stock market closed at a record high yesterday, with major indices showing significant gains. Financial analysts attribute this to a combination of strong corporate earnings, technological innovation, and investor confidence. Trading volume was higher than average.",
+        "source": "Financial Times",
+        "actual_bias": "neutral"
+    }
+]
