@@ -1,10 +1,11 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from django.urls import reverse
-from rest_framework.test import APIClient, APIRequestFactory
+from rest_framework.test import APIClient
 from rest_framework import status
 from news.services import MediastackService
 from news.views import ArticlesView
+from django.test import override_settings
 
 @pytest.fixture
 def api_client():
@@ -36,18 +37,24 @@ def mock_api_response(mock_article_data):
 
 @pytest.mark.django_db
 class TestArticlesView:
+    def setup_method(self):
+        # Reset class-level service before each test
+        ArticlesView.mediastack_service = None
+
     def test_articles_endpoint_exists(self, api_client):
         url = reverse('articles')
         response = api_client.get(url)
         assert response.status_code != status.HTTP_404_NOT_FOUND
 
-    @patch('news.services.MediastackService')
-    def test_get_articles_success(self, mock_service_class, api_client, mock_api_response):
-        # Setup mock service
-        mock_service = mock_service_class.return_value
+    def test_get_articles_success(self, api_client, mock_api_response):
+        # Create mock service
+        mock_service = MagicMock(spec=MediastackService)
         mock_service.get_articles.return_value = mock_api_response
         mock_service.format_article_data.return_value = mock_api_response['data'][0]
-        
+
+        # Set mock service
+        ArticlesView.mediastack_service = mock_service
+
         # Test API call
         url = reverse('articles')
         response = api_client.get(url, {
@@ -74,42 +81,57 @@ class TestArticlesView:
         assert pagination['offset'] == 0
         assert pagination['total'] == 100
 
-    @patch('news.services.MediastackService')
-    def test_get_articles_invalid_params(self, mock_service_class, api_client):
+        # Verify service was called with correct parameters
+        mock_service.get_articles.assert_called_once_with(
+            keywords='test',
+            categories=['technology'],
+            countries=['us'],
+            limit=25,
+            offset=0
+        )
+
+    def test_get_articles_invalid_params(self, api_client):
         url = reverse('articles')
         response = api_client.get(url, {'limit': 'invalid'})
         
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert 'error' in response.data
 
-    @patch('news.services.MediastackService')
-    def test_get_articles_service_error(self, mock_service_class, api_client):
-        # Setup mock to raise exception
-        mock_service = mock_service_class.return_value
+    def test_get_articles_service_error(self, api_client):
+        # Create mock service that raises an exception
+        mock_service = MagicMock(spec=MediastackService)
         mock_service.get_articles.side_effect = Exception('API Error')
-        
+
+        # Set mock service
+        ArticlesView.mediastack_service = mock_service
+
+        # Test API call
         url = reverse('articles')
         response = api_client.get(url)
         
         assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
         assert 'error' in response.data
 
-    @patch('news.services.MediastackService')
-    def test_articles_cache(self, mock_service_class, api_client, mock_api_response):
-        # Setup mock service
-        mock_service = mock_service_class.return_value
+    def test_articles_cache(self, api_client, mock_api_response):
+        # Create mock service
+        mock_service = MagicMock(spec=MediastackService)
         mock_service.get_articles.return_value = mock_api_response
         mock_service.format_article_data.return_value = mock_api_response['data'][0]
+
+        # Set mock service
+        ArticlesView.mediastack_service = mock_service
+
+        # Test API calls
+        url = reverse('articles')
         
         # First request with cache disabled for testing
-        url = reverse('articles')
-        with patch('django.core.cache.cache.get', return_value=None):  # Force cache miss
+        with patch('django.core.cache.cache.get', return_value=None):
             response1 = api_client.get(url)
             assert response1.status_code == status.HTTP_200_OK
-            
+
             # Second request should hit the cache
             response2 = api_client.get(url)
             assert response2.status_code == status.HTTP_200_OK
-            
+
             # Verify that the service was only called once
             assert mock_service.get_articles.call_count == 1

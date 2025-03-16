@@ -10,8 +10,12 @@ from typing import Optional, List
 # Create your views here.
 
 class ArticlesView(APIView):
-    def __init__(self, mediastack_service=None):
-        self.mediastack_service = mediastack_service or MediastackService()
+    mediastack_service = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.mediastack_service is None:
+            self.__class__.mediastack_service = MediastackService()
 
     def get(self, request):
         """
