@@ -9,3 +9,4 @@ class ArticleSerializer(serializers.Serializer):
     published_at = serializers.DateTimeField(allow_null=True)
     source = serializers.CharField(max_length=200, allow_null=True, allow_blank=True)
     category = serializers.CharField(max_length=100, allow_null=True, allow_blank=True)
+    country = serializers.CharField(max_length=2, allow_null=True, allow_blank=True)  # Add country field

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiBookmark, FiShare2, FiMapPin, FiClock } from 'react-icons/fi';
+import { getCountryName } from '../../utils/countryUtils';
 
 /**
  * Card Component
@@ -10,6 +11,7 @@ import { FiBookmark, FiShare2, FiMapPin, FiClock } from 'react-icons/fi';
  * @param {string} props.description - Card description
  * @param {string} props.image - URL of the image to display
  * @param {string} props.category - Category of the content
+ * @param {string} props.country - Country code of the article
  * @param {string} props.source - Source of the article
  * @param {string} props.published_at - Publication date
  * @param {string} props.url - URL of the article
@@ -21,6 +23,7 @@ const Card = ({
   description,
   image,
   category,
+  country,
   source,
   published_at,
   url,
@@ -72,18 +75,25 @@ const Card = ({
     >
       {/* Card Image */}
       <div 
-        className={isGridVariant ? 'h-48' : 'w-1/3 h-full'}
+        className={isGridVariant ? 'h-48 relative' : 'w-1/3 h-full relative'}
         style={{ 
           backgroundImage: `url(${image || 'https://via.placeholder.com/300x200?text=No+Image'})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
       >
-        {category && (
-          <span className="inline-block bg-blue-600 text-white text-xs px-2 py-1 m-2 rounded">
-            {category}
-          </span>
-        )}
+        <div className="absolute top-2 left-2 flex gap-2">
+          {category && (
+            <span className="inline-block bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">
+              {category.toUpperCase()}
+            </span>
+          )}
+          {country && (
+            <span className="inline-block bg-gray-800 text-white text-xs px-2 py-1 rounded font-medium" title={country}>
+              {getCountryName(country)}
+            </span>
+          )}
+        </div>
       </div>
       
       {/* Card Content */}

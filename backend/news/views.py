@@ -71,6 +71,10 @@ class ArticlesView(APIView):
                     limit=limit,
                     offset=offset
                 )
+                
+                # Log raw response for debugging
+                logger.info(f"Raw Mediastack response: {response_data}")
+
                 logger.info(f"Received {len(response_data.get('data', []))} articles from Mediastack")
 
                 # Format articles
@@ -79,9 +83,10 @@ class ArticlesView(APIView):
                     formatted_article = self.mediastack_service.format_article_data(article_data)
                     serializer = ArticleSerializer(data=formatted_article)
                     if serializer.is_valid():
-                        articles.append(serializer.data)
+                        articles.append(serializer.validated_data)
                     else:
                         logger.warning(f"Invalid article data: {serializer.errors}")
+                        logger.warning(f"Raw article data: {article_data}")
 
                 result = {
                     'articles': articles,
