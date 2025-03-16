@@ -46,15 +46,16 @@ const GridLayout = ({ items = [], loading = false, emptyMessage = 'No items to d
     >
       {items.map((item) => (
         <Card
-          key={item.id}
+          key={item.url}
           title={item.title}
           description={item.description}
           image={item.image}
           category={item.category}
-          date={item.date}
-          location={item.location}
+          country={item.country}
+          source={item.source}
+          published_at={item.published_at}
+          url={item.url}
           variant={layoutType}
-          onClick={() => console.log('Clicked item:', item.id)}
         />
       ))}
     </div>

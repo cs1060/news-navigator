@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GridLayout from '../components/grid/GridLayout';
 import MapPlaceholder from '../components/map/MapPlaceholder';
-import useMockData from '../hooks/useMockData';
+import useArticles from '../hooks/useArticles';
 import useUIStore from '../store/uiStore';
 import { FiGrid, FiList, FiMap } from 'react-icons/fi';
 
 const HomeView = () => {
-  const { data: articles, loading } = useMockData('articles');
+  const [filters, setFilters] = useState({
+    limit: 25,
+    offset: 0
+  });
+  
+  const { articles, loading, error } = useArticles(filters);
   const { layoutType, setLayoutType, isMapVisible, toggleMapVisibility } = useUIStore();
   
   // Prepare location markers for the map from articles
-  const markers = articles.map(article => article.location);
+  const markers = articles
+    .filter(article => article.location)
+    .map(article => article.location);
   
   return (
     <div className="py-4">
@@ -59,6 +66,13 @@ const HomeView = () => {
           {isMapVisible ? 'Hide Map' : 'Show Map'}
         </button>
       </div>
+      
+      {/* Error Message */}
+      {error && (
+        <div className="bg-red-50 text-red-600 p-4 rounded-md mb-6">
+          {error}
+        </div>
+      )}
       
       {/* Map (conditionally rendered) */}
       {isMapVisible && (
