@@ -17,7 +17,10 @@ def mock_article_data():
         'image': 'https://example.com/image.jpg',
         'published_at': '2025-03-15T22:00:00+00:00',
         'source': 'Test Source',
-        'category': 'technology'
+        'category': 'technology',
+        'country': 'us',
+        'bias_score': 0.0,
+        'reliability_score': 0.8
     }
 
 @pytest.fixture

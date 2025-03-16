@@ -84,7 +84,6 @@ class ArticlesView(APIView):
                 
                 # Log raw response for debugging
                 logger.info(f"Raw Mediastack response: {response_data}")
-
                 logger.info(f"Received {len(response_data.get('data', []))} articles from Mediastack")
 
                 # Format articles
