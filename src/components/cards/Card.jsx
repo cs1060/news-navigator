@@ -1,12 +1,15 @@
 import React from 'react';
-import { FiBookmark, FiShare2, FiMapPin, FiClock } from 'react-icons/fi';
+import { FiBookmark, FiShare2, FiMapPin, FiClock, FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import { getCountryName } from '../../utils/countryUtils';
+import BiasIndicator from '../bias/BiasIndicator';
+import useUserPreferences from '../../hooks/useUserPreferences';
 
 /**
  * Card Component
  * Displays structured content like news articles, settings, or preferences
  * 
  * @param {Object} props - Component props
+ * @param {string} props.id - Article ID
  * @param {string} props.title - Card title
  * @param {string} props.description - Card description
  * @param {string} props.image - URL of the image to display
@@ -17,8 +20,10 @@ import { getCountryName } from '../../utils/countryUtils';
  * @param {string} props.url - URL of the article
  * @param {string} props.variant - Card variant ('grid' or 'list')
  * @param {Function} props.onClick - Click handler for the card
+ * @param {Function} props.onSave - Handler for saving/bookmarking an article
  */
 const Card = ({
+  id,
   title,
   description,
   image,
@@ -29,7 +34,9 @@ const Card = ({
   url,
   variant = 'grid',
   onClick,
+  onSave,
 }) => {
+  const { recordInteraction } = useUserPreferences();
   // Determine card layout based on variant
   const isGridVariant = variant === 'grid';
   
@@ -60,8 +67,59 @@ const Card = ({
     // If the click was on a button, don't trigger the card click
     if (e.target.closest('button')) return;
     if (onClick) onClick();
+    
+    // Record click interaction
+    if (id) {
+      try {
+        recordInteraction(id, 'click');
+      } catch (err) {
+        console.error('Failed to record click interaction:', err);
+      }
+    }
+    
     // Open article in new tab
     if (url) window.open(url, '_blank');
+  };
+  
+  const handleSave = (e) => {
+    e.stopPropagation();
+    
+    // Record save interaction
+    if (id) {
+      try {
+        recordInteraction(id, 'save');
+      } catch (err) {
+        console.error('Failed to record save interaction:', err);
+      }
+    }
+    
+    if (onSave) onSave(id);
+  };
+  
+  const handleLike = (e) => {
+    e.stopPropagation();
+    
+    // Record like interaction
+    if (id) {
+      try {
+        recordInteraction(id, 'like');
+      } catch (err) {
+        console.error('Failed to record like interaction:', err);
+      }
+    }
+  };
+  
+  const handleDislike = (e) => {
+    e.stopPropagation();
+    
+    // Record dislike interaction
+    if (id) {
+      try {
+        recordInteraction(id, 'dislike');
+      } catch (err) {
+        console.error('Failed to record dislike interaction:', err);
+      }
+    }
   };
   
   return (
@@ -98,13 +156,16 @@ const Card = ({
       
       {/* Card Content */}
       <div className={`flex flex-col ${isGridVariant ? 'p-4 flex-1' : 'p-3 flex-1'}`}>
-        {/* Source and Date */}
-        <div className="flex items-center text-xs text-gray-500 mb-2">
-          {source && (
-            <span className="font-medium text-gray-700 mr-2">
-              {source}
-            </span>
-          )}
+        {/* Source, Bias Indicator, and Date */}
+        <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+          <div className="flex items-center">
+            {source && (
+              <span className="font-medium text-gray-700 mr-2 flex items-center">
+                {source}
+                {source && <BiasIndicator source={source} variant="badge" />}
+              </span>
+            )}
+          </div>
           {published_at && (
             <span className="flex items-center">
               <FiClock size={12} className="mr-1" />
@@ -126,11 +187,26 @@ const Card = ({
         {/* Footer */}
         <div className="flex justify-between items-center mt-3 pt-2 border-t border-gray-100">
           <div className="flex items-center space-x-2">
-            <button className={buttonClass} aria-label="Save">
+            <button 
+              className={buttonClass} 
+              aria-label="Save"
+              onClick={handleSave}
+            >
               <FiBookmark size={16} />
             </button>
-            <button className={buttonClass} aria-label="Share">
-              <FiShare2 size={16} />
+            <button 
+              className={buttonClass} 
+              aria-label="Like"
+              onClick={handleLike}
+            >
+              <FiThumbsUp size={16} />
+            </button>
+            <button 
+              className={buttonClass} 
+              aria-label="Dislike"
+              onClick={handleDislike}
+            >
+              <FiThumbsDown size={16} />
             </button>
           </div>
           

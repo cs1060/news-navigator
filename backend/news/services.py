@@ -87,7 +87,9 @@ class MediastackService:
                 ) if article_data.get('published_at') else None,
                 'source': article_data.get('source'),
                 'category': article_data.get('category'),
-                'country': country.upper() if country else None
+                'country': country.upper() if country else None,
+                'bias_score': None,  # Default to None
+                'reliability_score': None  # Default to None
             }
             
             # Add bias and reliability information if available
