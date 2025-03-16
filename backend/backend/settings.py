@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--6k%f98f8v(1^%b7_4=qpbhn3a38ugrh&lro132zthd*-w5x5k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -125,16 +126,57 @@ STATIC_URL = 'static/'
 CORS_ALLOW_ALL_ORIGINS = True  # For development only
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Django REST Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+}
 
 # Load environment variables
 from dotenv import load_dotenv
 import os
+import logging
 
+logger = logging.getLogger(__name__)
+
+# Load .env file
 load_dotenv()
 
 # Mediastack API settings
 MEDIASTACK_API_KEY = os.getenv('MEDIASTACK_API_KEY')
+if not MEDIASTACK_API_KEY:
+    logger.error("MEDIASTACK_API_KEY not found in environment variables")
+else:
+    logger.info("MEDIASTACK_API_KEY loaded successfully")
+
 MEDIASTACK_BASE_URL = 'http://api.mediastack.com/v1'
 
 # Default primary key field type
