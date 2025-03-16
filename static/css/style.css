@@ -1,0 +1,207 @@
+/* Main Styles for News Navigator */
+
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+/* Navbar Adjustments */
+.navbar-brand {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* News Article Cards */
+.news-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-card .card-body {
+    flex: 1;
+}
+
+.news-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.news-card .card-text {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.news-card .card-footer {
+    background-color: transparent;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding: 0.75rem 1.25rem;
+}
+
+/* Source and Bias Indicators */
+.source-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.bias-indicator {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, #3b82f6, #e5e7eb, #ef4444);
+    border-radius: 3px;
+    margin: 0.5rem 0;
+    position: relative;
+}
+
+.bias-marker {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #000;
+    border-radius: 50%;
+    top: -2px;
+    transform: translateX(-50%);
+}
+
+/* Map Styles */
+#news-map {
+    width: 100%;
+    z-index: 1;
+}
+
+.map-marker-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.map-marker-high {
+    background-color: #dc3545;
+}
+
+.map-marker-medium {
+    background-color: #ffc107;
+}
+
+.map-marker-low {
+    background-color: #0dcaf0;
+}
+
+.leaflet-popup-content {
+    min-width: 200px;
+}
+
+.leaflet-popup-content h5 {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Pagination */
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Category Chips */
+.category-chip {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    background-color: #e9ecef;
+    color: #495057;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.category-politics {
+    background-color: #dc3545;
+    color: white;
+}
+
+.category-business {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.category-technology {
+    background-color: #6610f2;
+    color: white;
+}
+
+.category-science {
+    background-color: #20c997;
+    color: white;
+}
+
+.category-health {
+    background-color: #198754;
+    color: white;
+}
+
+.category-entertainment {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.category-sports {
+    background-color: #0dcaf0;
+    color: white;
+}
+
+.category-environment {
+    background-color: #198754;
+    color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 160px;
+    }
+    
+    #news-map {
+        height: 400px !important;
+    }
+}

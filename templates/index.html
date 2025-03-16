@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block title %}News Navigator - Interactive World Map{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+    <!-- Hero Section -->
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h1 class="display-5 fw-bold">News Navigator</h1>
+                            <p class="lead">Explore global news with transparency and context. Our interactive world map highlights news hotspots and provides diverse perspectives on current events.</p>
+                            <div class="d-flex gap-3 mt-3">
+                                <a href="#world-map" class="btn btn-light">
+                                    <i class="fas fa-globe me-2"></i>Explore Map
+                                </a>
+                                <a href="#news-feed" class="btn btn-outline-light">
+                                    <i class="fas fa-newspaper me-2"></i>Browse News
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 d-none d-lg-block text-center">
+                            <i class="fas fa-globe-americas fa-6x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- World Map Section -->
+    <section id="world-map" class="mb-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h2 class="h4 mb-0">Global News Activity</h2>
+                        <div class="d-flex align-items-center">
+                            <!-- Category Filter -->
+                            <div class="me-3">
+                                <select id="map-category-filter" class="form-select form-select-sm">
+                                    <option value="all">All Categories</option>
+                                    <option value="politics">Politics</option>
+                                    <option value="business">Business</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="science">Science</option>
+                                    <option value="health">Health</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="environment">Environment</option>
+                                </select>
+                            </div>
+                            
+                            <!-- View Mode Selector -->
+                            <div class="btn-group btn-group-sm" role="group">
+                                <button type="button" class="btn btn-outline-primary active" id="view-markers">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="view-heatmap">
+                                    <i class="fas fa-fire"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="view-circles">
+                                    <i class="fas fa-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- Map Legend -->
+                        <div class="bg-light p-2 d-flex align-items-center justify-content-center">
+                            <span class="me-3">News Activity:</span>
+                            <span class="badge bg-danger me-2">High</span>
+                            <span class="badge bg-warning text-dark me-2">Medium</span>
+                            <span class="badge bg-info text-dark">Low</span>
+                        </div>
+                        
+                        <!-- Map Container -->
+                        <div id="news-map" style="height: 600px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Country News Modal -->
+    <div class="modal fade" id="countryNewsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="countryNewsTitle">News from Country</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="countryNewsLoading" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading news articles...</p>
+                    </div>
+                    <div id="countryNewsContent">
+                        <!-- News articles will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Feed Section -->
+    <section id="news-feed" class="mb-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h2 class="h4 mb-0">Latest News</h2>
+                        <div class="d-flex align-items-center">
+                            <!-- Category Filter -->
+                            <select id="feed-category-filter" class="form-select form-select-sm">
+                                <option value="all">All Categories</option>
+                                <option value="politics">Politics</option>
+                                <option value="business">Business</option>
+                                <option value="technology">Technology</option>
+                                <option value="science">Science</option>
+                                <option value="health">Health</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="sports">Sports</option>
+                                <option value="environment">Environment</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="news-feed-loading" class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading news articles...</p>
+                        </div>
+                        <div id="news-feed-content" class="row g-4">
+                            <!-- News articles will be loaded here -->
+                        </div>
+                        <div id="news-feed-pagination" class="d-flex justify-content-center mt-4">
+                            <!-- Pagination will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section id="search" class="mb-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h2 class="h4 mb-0">Search News</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="search-form">
+                            <div class="row g-3">
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <input type="text" id="search-query" class="form-control" placeholder="Search for news...">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search me-1"></i> Search
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <select id="search-category" class="form-select">
+                                        <option value="all">All Categories</option>
+                                        <option value="politics">Politics</option>
+                                        <option value="business">Business</option>
+                                        <option value="technology">Technology</option>
+                                        <option value="science">Science</option>
+                                        <option value="health">Health</option>
+                                        <option value="entertainment">Entertainment</option>
+                                        <option value="sports">Sports</option>
+                                        <option value="environment">Environment</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="date" id="search-date-from" class="form-control" placeholder="From Date">
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="date" id="search-date-to" class="form-control" placeholder="To Date">
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <hr>
+                        
+                        <div id="search-results-container">
+                            <div id="search-loading" class="text-center py-5 d-none">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Searching...</p>
+                            </div>
+                            <div id="search-initial" class="text-center py-5">
+                                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Enter a search term to find news articles</p>
+                            </div>
+                            <div id="search-results" class="row g-4 d-none">
+                                <!-- Search results will be loaded here -->
+                            </div>
+                            <div id="search-pagination" class="d-flex justify-content-center mt-4 d-none">
+                                <!-- Pagination will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize the map when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initMap();
+        loadNewsFeed();
+        setupSearchForm();
+    });
+</script>
+{% endblock %}
