@@ -1,0 +1,98 @@
+# News Navigator Timeline
+
+News Navigator Timeline is an interactive news platform that provides a temporal visualization of news stories along an interactive timeline. This prototype focuses on showing the evolution of news stories over time rather than geographical visualization. The application highlights potential biases in news reporting and offers personalized news feeds to users.
+
+## Features
+
+### Interactive Timeline
+- News stories displayed along an interactive chronological timeline
+- Highlight historical context and evolution of stories over time
+- Visual representation of how stories develop and relate to each other
+
+### News Filtering
+- Filter news by category (politics, technology, health, etc.)
+- View summaries of key events in each region
+- Sort articles by relevance, date, or popularity
+
+### User Personalization
+- Create accounts to save articles and preferences
+- Personalized news feed based on interests
+- Share summaries with friends
+
+### Bias Transparency
+- Articles labeled with potential bias indicators
+- Source credibility ratings
+- Multiple perspectives on major news stories
+
+## Tech Stack
+
+### Backend
+- Flask (Python web framework)
+- Flask-CORS for cross-origin resource sharing
+- Mock data generation for prototyping
+
+### Frontend
+- React for UI components
+- React Router for navigation
+- Timeline visualization libraries for interactive timelines
+- Bootstrap for responsive design
+
+## Setup Instructions
+
+### Backend Setup
+1. Navigate to the backend directory:
+   ```
+   cd backend
+   ```
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+3. Run the Flask server:
+   ```
+   python app.py
+   ```
+   The server will run on http://localhost:5001
+
+### Frontend Setup
+1. Navigate to the frontend directory:
+   ```
+   cd frontend
+   ```
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Start the development server:
+   ```
+   npm start
+   ```
+   The application will be available at http://localhost:1234
+
+## Project Structure
+
+```
+NewsNavigator/
+├── backend/
+│   ├── app.py          # Main Flask application
+│   ├── data.py         # Mock data generation
+│   └── requirements.txt # Python dependencies
+├── frontend/
+│   ├── src/
+│   │   ├── components/ # Reusable UI components
+│   │   ├── pages/      # Page components
+│   │   ├── utils/      # Utility functions
+│   │   ├── App.js      # Main React component
+│   │   └── index.js    # React entry point
+│   └── package.json    # Node.js dependencies
+└── README.md           # Project documentation
+```
+
+## Future Enhancements
+
+- Integration with real news APIs
+- User authentication and account management
+- Advanced filtering and search capabilities
+- Mobile application
+- Sentiment analysis of news articles
+- Enhanced trend analysis and pattern recognition in news cycles
