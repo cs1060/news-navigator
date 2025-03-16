@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+
+{% block title %}News Navigator Timeline - Temporal News Visualization{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+    <!-- Hero Section -->
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-lg-8">
+                            <h1 class="display-5 fw-bold">News Navigator Timeline</h1>
+                            <p class="lead">Explore news with historical context and temporal perspective. Our interactive timeline visualizes how stories develop over time, highlighting connections and providing diverse perspectives.</p>
+                            <div class="d-flex gap-3 mt-3">
+                                <a href="#timeline" class="btn btn-light">
+                                    <i class="fas fa-clock-rotate-left me-2"></i>Explore Timeline
+                                </a>
+                                <a href="#trending" class="btn btn-outline-light">
+                                    <i class="fas fa-chart-line me-2"></i>View Trending Topics
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 d-none d-lg-block text-center">
+                            <i class="fas fa-clock-rotate-left fa-6x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="mb-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <h2 class="h4 mb-0">News Timeline</h2>
+                        <div class="d-flex align-items-center">
+                            <!-- Category Filter -->
+                            <div class="me-3">
+                                <select id="timeline-category-filter" class="form-select form-select-sm">
+                                    <option value="all">All Categories</option>
+                                    <option value="politics">Politics</option>
+                                    <option value="business">Business</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="science">Science</option>
+                                    <option value="health">Health</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="environment">Environment</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Date Range Selector -->
+                            <div class="d-flex align-items-center">
+                                <input type="date" id="timeline-start-date" class="form-control form-control-sm me-2" placeholder="Start Date">
+                                <span class="me-2">to</span>
+                                <input type="date" id="timeline-end-date" class="form-control form-control-sm me-2" placeholder="End Date">
+                                <button id="timeline-date-filter" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- Timeline Loading -->
+                        <div id="timeline-loading" class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading timeline...</p>
+                        </div>
+                        
+                        <!-- Timeline Container -->
+                        <div id="news-timeline" style="height: 600px; display: none;"></div>
+                        
+                        <!-- Timeline Legend -->
+                        <div class="bg-light p-2 d-flex align-items-center justify-content-center">
+                            <span class="me-3">News Importance:</span>
+                            <span class="badge bg-danger me-2">High</span>
+                            <span class="badge bg-warning text-dark me-2">Medium</span>
+                            <span class="badge bg-info text-dark">Low</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Topics Section -->
+    <section id="trending" class="mb-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h2 class="h4 mb-0">Trending Topics</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="trending-loading" class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Loading trending topics...</p>
+                        </div>
+                        
+                        <!-- Trending Momentum Chart -->
+                        <div class="row mb-4" id="trending-chart-container" style="display: none;">
+                            <div class="col-lg-12">
+                                <canvas id="trending-chart" height="100"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Trending Topics Grid -->
+                        <div class="row g-4" id="trending-topics-container" style="display: none;">
+                            <!-- Trending topics will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Evolution Section -->
+    <section id="stories" class="mb-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h2 class="h4 mb-0">Story Evolution</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-4">See how major stories develop over time, from initial reports to latest developments.</p>
+                        
+                        <div class="row g-4" id="story-evolution-container">
+                            <!-- Story cards will be loaded here -->
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card h-100 story-card" data-story-id="climate-summit-2025">
+                                    <div class="card-body">
+                                        <div class="category-chip category-environment">Environment</div>
+                                        <h5 class="card-title mt-2">Global Climate Summit 2025</h5>
+                                        <p class="card-text">Follow the developments of the Global Climate Summit, from announcement to implementation of agreements.</p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <button class="btn btn-sm btn-primary view-story-evolution">View Timeline</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card h-100 story-card" data-story-id="tech-innovation-2025">
+                                    <div class="card-body">
+                                        <div class="category-chip category-technology">Technology</div>
+                                        <h5 class="card-title mt-2">Breakthrough in Quantum Computing</h5>
+                                        <p class="card-text">Track the evolution of a major quantum computing breakthrough and its impact on technology and security.</p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <button class="btn btn-sm btn-primary view-story-evolution">View Timeline</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card h-100 story-card" data-story-id="election-2025">
+                                    <div class="card-body">
+                                        <div class="category-chip category-politics">Politics</div>
+                                        <h5 class="card-title mt-2">National Election 2025</h5>
+                                        <p class="card-text">Follow the presidential election campaign from its beginning through debates and key moments.</p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <button class="btn btn-sm btn-primary view-story-evolution">View Timeline</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-3 mb-4">
+                                <div class="card h-100 story-card" data-story-id="health-breakthrough-2025">
+                                    <div class="card-body">
+                                        <div class="category-chip category-health">Health</div>
+                                        <h5 class="card-title mt-2">Medical Breakthrough in Alzheimer's Treatment</h5>
+                                        <p class="card-text">Track the development of a promising new treatment for Alzheimer's disease from research to clinical trials.</p>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <button class="btn btn-sm btn-primary view-story-evolution">View Timeline</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Evolution Modal -->
+    <div class="modal fade" id="storyEvolutionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="storyEvolutionTitle">Story Evolution</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="storyEvolutionLoading" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Loading story evolution...</p>
+                    </div>
+                    <div id="storyEvolutionContent">
+                        <!-- Story evolution timeline will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <section id="search" class="mb-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h2 class="h4 mb-0">Search News</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="search-form">
+                            <div class="row g-3">
+                                <div class="col-lg-6">
+                                    <div class="input-group">
+                                        <input type="text" id="search-query" class="form-control" placeholder="Search for news...">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search me-1"></i> Search
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <select id="search-category" class="form-select">
+                                        <option value="all">All Categories</option>
+                                        <option value="politics">Politics</option>
+                                        <option value="business">Business</option>
+                                        <option value="technology">Technology</option>
+                                        <option value="science">Science</option>
+                                        <option value="health">Health</option>
+                                        <option value="entertainment">Entertainment</option>
+                                        <option value="sports">Sports</option>
+                                        <option value="environment">Environment</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="date" id="search-date-from" class="form-control" placeholder="From Date">
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="date" id="search-date-to" class="form-control" placeholder="To Date">
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <hr>
+                        
+                        <div id="search-results-container">
+                            <div id="search-loading" class="text-center py-5 d-none">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Searching...</p>
+                            </div>
+                            <div id="search-initial" class="text-center py-5">
+                                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Enter a search term to find news articles</p>
+                            </div>
+                            <div id="search-results" class="row g-4 d-none">
+                                <!-- Search results will be loaded here -->
+                            </div>
+                            <div id="search-pagination" class="d-flex justify-content-center mt-4 d-none">
+                                <!-- Pagination will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize the application when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        initTimeline();
+        loadTrendingTopics();
+        setupStoryEvolution();
+        setupSearchForm();
+    });
+</script>
+{% endblock %}

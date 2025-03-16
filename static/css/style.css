@@ -1,0 +1,334 @@
+/* Main Styles for News Navigator Timeline */
+
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.container-fluid {
+    max-width: 1400px;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+}
+
+/* Timeline Specific Styles */
+#news-timeline {
+    background-color: #fff;
+    border-radius: 0.25rem;
+}
+
+.timeline-event {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.timeline-event:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.timeline-event-content {
+    padding: 15px;
+}
+
+/* Category Chips */
+.category-chip {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.category-politics {
+    background-color: #dc3545;
+    color: white;
+}
+
+.category-business {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.category-technology {
+    background-color: #6610f2;
+    color: white;
+}
+
+.category-science {
+    background-color: #20c997;
+    color: white;
+}
+
+.category-health {
+    background-color: #0dcaf0;
+    color: #212529;
+}
+
+.category-entertainment {
+    background-color: #d63384;
+    color: white;
+}
+
+.category-sports {
+    background-color: #198754;
+    color: white;
+}
+
+.category-environment {
+    background-color: #198754;
+    color: white;
+}
+
+/* Bias Indicators */
+.bias-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+}
+
+.bias-left {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: #0d6efd;
+    border-left: 3px solid #0d6efd;
+}
+
+.bias-right {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border-left: 3px solid #dc3545;
+}
+
+.bias-center {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+    border-left: 3px solid #6c757d;
+}
+
+/* Source Reliability */
+.reliability-high {
+    color: #198754;
+}
+
+.reliability-medium {
+    color: #fd7e14;
+}
+
+.reliability-low {
+    color: #dc3545;
+}
+
+/* Story Evolution Cards */
+.story-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Trending Topics */
+.trending-topic {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.trending-topic-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+    color: white;
+}
+
+.trending-topic-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.trending-momentum {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.momentum-up {
+    color: #198754;
+}
+
+.momentum-down {
+    color: #dc3545;
+}
+
+/* Article Cards */
+.article-card {
+    height: 100%;
+    cursor: pointer;
+}
+
+.article-image {
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.article-source {
+    font-weight: 600;
+}
+
+.article-date {
+    white-space: nowrap;
+}
+
+/* Search Results */
+.search-result {
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.search-result:hover {
+    transform: translateY(-3px);
+}
+
+/* Timeline Event Styles */
+.timeline-event-low {
+    border-left: 4px solid #0dcaf0;
+}
+
+.timeline-event-medium {
+    border-left: 4px solid #fd7e14;
+}
+
+.timeline-event-high {
+    border-left: 4px solid #dc3545;
+}
+
+/* Article Modal */
+#articleContent {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+#articleContent p {
+    margin-bottom: 1.2rem;
+}
+
+#articleContent img {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+    border-radius: 0.25rem;
+}
+
+/* Story Evolution Timeline */
+.story-evolution-timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.story-evolution-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20px;
+    width: 4px;
+    background-color: #e9ecef;
+}
+
+.evolution-event {
+    position: relative;
+    margin-bottom: 30px;
+    padding-left: 50px;
+}
+
+.evolution-event::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #0d6efd;
+    border: 4px solid white;
+    z-index: 1;
+}
+
+.evolution-event-date {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.evolution-event-content {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .trending-topic {
+        height: 150px;
+    }
+    
+    .article-image {
+        height: 140px;
+    }
+}
+
+/* Custom Timeline.js Overrides */
+.tl-timeline {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.tl-headline-date, .tl-headline {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.tl-text p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}

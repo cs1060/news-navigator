@@ -1,0 +1,65 @@
+# Prototype 3 - News Navigator Timeline View
+
+This prototype builds on the previous versions of the News Navigator platform, focusing on enhancing the user experience with timeline-based visualization and improved filtering features.
+
+## Features
+
+- Timeline-based news visualization showing news evolution over time
+- Enhanced filtering capabilities for news articles
+- Personalized news recommendations based on user preferences
+- Improved article categorization and bias detection
+- Responsive design for mobile and desktop viewing
+
+## Technology Stack
+
+- Flask (Python web framework) for backend services
+- Jinja2 templates for server-side rendering
+- JavaScript for interactive elements
+- CSS for styling and responsive design
+
+## Setup Instructions
+
+1. Create a virtual environment:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Run the application:
+   ```
+   python app.py
+   ```
+
+4. Open your browser and navigate to `http://localhost:5000`
+
+## Project Structure
+
+```
+Prototype3/
+├── app/
+│   ├── __init__.py     # Flask application initialization
+│   ├── routes.py       # API routes and endpoints
+│   └── data.py         # Mock data generation and retrieval
+├── static/
+│   ├── css/            # Stylesheets
+│   ├── js/             # JavaScript files
+│   └── img/            # Images and icons
+├── templates/
+│   ├── base.html       # Base template with common elements
+│   └── index.html      # Main page template
+├── app.py              # Application entry point
+└── README.md           # Project documentation
+```
+
+## Future Enhancements
+
+- Integration with real news APIs
+- Advanced sentiment analysis
+- Social sharing capabilities
+- User account management
+- Mobile application development
